@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blade & Beard — Премиальный Барбершоп</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Подключение файла стилей БЭМ -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased selection:bg-amber-400 selection:text-black">
+
+    <!-- ==========================================
+         HEADER / NAVBAR (Блок: header)
+         ========================================== -->
+    <header class="header fixed top-0 left-0 w-full z-40 glass-panel px-4 lg:px-12 py-3">
+        <div class="header__container max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Логотип (Блок: header__logo) -->
+            <a href="#" class="header__logo flex items-center gap-3 group">
+                <div class="header__logo-icon w-11 h-11 rounded-full border-2 border-amber-500 bg-neutral-900 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-scissors text-amber-500 text-lg group-hover:rotate-45 transition-transform duration-300"></i>
+                </div>
+                <div class="header__logo-text flex flex-col">
+                    <span class="u-font-title text-base sm:text-lg font-bold tracking-widest text-white leading-none">BLADE <span class="text-amber-500">&</span> BEARD</span>
+                    <span class="text-[9px] uppercase tracking-[0.2em] text-neutral-400 mt-1">Barber Studio</span>
+                </div>
+            </a>
+
+            <!-- Навигация (Блок: header__nav) -->
+            <nav class="header__nav hidden md:flex items-center gap-8 text-xs sm:text-sm font-medium tracking-wider">
+                <a href="#hero" class="header__nav-link text-neutral-300 hover:text-amber-500 transition-colors">О нас</a>
+                <a href="#catalog" class="header__nav-link text-neutral-300 hover:text-amber-500 transition-colors">Прически & Цены</a>
+                <a href="#reviews" class="header__nav-link text-neutral-300 hover:text-amber-500 transition-colors">Отзывы</a>
+                <a href="#contacts" class="header__nav-link text-neutral-300 hover:text-amber-500 transition-colors">Контакты</a>
+            </nav>
+
+            <!-- Блок Записи с Выпадающим Меню (Блок: header__actions) -->
+            <div class="header__actions relative flex items-center">
+                <div class="inline-flex rounded-md shadow-lg shadow-amber-500/10">
+                    <!-- Основная кнопка записи -->
+                    <button type="button" onclick="BookingModule.openModal()" class="btn btn--primary bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold text-xs sm:text-sm uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-l-md transition-all flex items-center gap-2">
+                        <i class="fa-regular fa-calendar-check text-sm"></i>
+                        <span>Записаться</span>
+                    </button>
+                    <!-- Стрелка-триггер выпадающего меню -->
+                    <button type="button" id="menuTriggerBtn" onclick="BookingModule.toggleDropdown(event)" class="btn btn--arrow bg-amber-600 hover:bg-amber-500 text-black px-3 py-2.5 rounded-r-md border-l border-black/20 transition-colors">
+                        <i id="menuTriggerIcon" class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                </div>
+
+                <!-- Выпадающее меню услуг (Блок: services-dropdown) -->
+                <div id="servicesDropdown" class="services-dropdown hidden absolute right-0 top-full mt-3 w-72 glass-panel rounded-xl shadow-2xl border border-amber-500/30 overflow-hidden z-50">
+                    <div class="services-dropdown__header p-3 border-b border-white/10 text-[10px] uppercase tracking-widest text-amber-400 font-semibold flex justify-between items-center">
+                        <span>Быстрая запись на услугу:</span>
+                        <i class="fa-solid fa-bolt text-amber-500"></i>
+                    </div>
+                    <ul class="services-dropdown__list py-1 text-xs">
+                        <li>
+                            <button type="button" onclick="BookingModule.selectServiceAndOpen('Стрижка бороды')" class="services-dropdown__item w-full text-left px-4 py-3 hover:bg-amber-500/20 hover:text-amber-400 flex items-center justify-between transition-colors">
+                                <span>Стрижка бороды</span>
+                                <span class="font-bold text-amber-500">4,000 ₸</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="BookingModule.selectServiceAndOpen('Мужская стрижка')" class="services-dropdown__item w-full text-left px-4 py-3 hover:bg-amber-500/20 hover:text-amber-400 flex items-center justify-between transition-colors">
+                                <span>Мужская стрижка</span>
+                                <span class="font-bold text-amber-500">7,000 ₸</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="BookingModule.selectServiceAndOpen('Стрижка + Борода')" class="services-dropdown__item w-full text-left px-4 py-3 hover:bg-amber-500/20 hover:text-amber-400 flex items-center justify-between transition-colors font-semibold text-white">
+                                <span>Стрижка + Борода</span>
+                                <span class="font-bold text-amber-500">10,000 ₸</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="BookingModule.selectServiceAndOpen('Детская стрижка')" class="services-dropdown__item w-full text-left px-4 py-3 hover:bg-amber-500/20 hover:text-amber-400 flex items-center justify-between transition-colors">
+                                <span>Детская стрижка</span>
+                                <span class="font-bold text-amber-500">5,000 ₸</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="BookingModule.selectServiceAndOpen('Королевское бритье')" class="services-dropdown__item w-full text-left px-4 py-3 hover:bg-amber-500/20 hover:text-amber-400 flex items-center justify-between transition-colors">
+                                <span>Королевское бритье</span>
+                                <span class="font-bold text-amber-500">8,000 ₸</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ==========================================
+         HERO SECTION (Блок: hero)
+         ========================================== -->
+    <section id="hero" class="hero relative min-h-screen pt-28 pb-16 flex items-center justify-center overflow-hidden bg-neutral-950">
+        <div class="hero__bg-gradient absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-900 via-neutral-950 to-black opacity-95"></div>
+        <div class="hero__bg-image absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center mix-blend-overlay opacity-20"></div>
+
+        <div class="hero__container relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <div class="lg:col-span-3 space-y-6 text-center lg:text-left order-2 lg:order-1">
+                    <div class="card p-6 border-l-4 border-l-amber-500">
+                        <i class="fa-solid fa-crown text-amber-500 text-2xl mb-3"></i>
+                        <h3 class="u-font-title text-base font-bold text-white mb-1">Премиум Класс</h3>
+                        <p class="text-xs text-neutral-400 leading-relaxed">Эксклюзивный сервис, напитки премиум-уровня и атмосфера закрытого клуба.</p>
+                    </div>
+
+                    <div class="card p-6 border-l-4 border-l-amber-500">
+                        <i class="fa-solid fa-award text-amber-500 text-2xl mb-3"></i>
+                        <h3 class="u-font-title text-base font-bold text-white mb-1">Опытные Барберы</h3>
+                        <p class="text-xs text-neutral-400 leading-relaxed">Мастера со стажем от 7 лет, владеющие идеальной геометрией стрижки.</p>
+                    </div>
+                </div>
+
+                <div class="hero__showcase lg:col-span-6 flex flex-col items-center text-center order-1 lg:order-2">
+                    <div class="hero__frame relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-amber-500/40 to-yellow-600/40 rounded-2xl blur-lg opacity-40 group-hover:opacity-75 transition duration-1000"></div>
+                        <div class="relative rounded-2xl overflow-hidden border border-amber-500/30 max-w-md mx-auto shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=1000" alt="Мастер Blade and Beard ровняет прическу" class="w-full h-[400px] sm:h-[450px] object-cover object-top transform group-hover:scale-105 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                            
+                            <div class="absolute bottom-6 left-0 right-0 px-6">
+                                <span class="bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] uppercase tracking-widest px-3 py-1 rounded-full font-semibold">Искусство Стиля</span>
+                                <h1 class="u-font-title text-2xl sm:text-3xl font-extrabold text-white mt-2">BLADE & BEARD</h1>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="hero__description text-xs sm:text-sm text-neutral-300 max-w-md mt-6 leading-relaxed">
+                        Премиальный барбершоп, где стиль встречает традицию. Мы создаем четкие линии, ровные контуры и образ, подчёркивающий ваш характер.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-3 space-y-6 text-center lg:text-right order-3">
+                    <div class="card p-6 lg:border-r-4 lg:border-l-0 border-l-4 border-amber-500">
+                        <i class="fa-solid fa-gem text-amber-500 text-2xl mb-3"></i>
+                        <h3 class="u-font-title text-base font-bold text-white mb-1">Топ Косметика</h3>
+                        <p class="text-xs text-neutral-400 leading-relaxed">Используем исключительно профессиональные мужские бренды из Европы.</p>
+                    </div>
+
+                    <div class="card p-6 lg:border-r-4 lg:border-l-0 border-l-4 border-amber-500">
+                        <i class="fa-solid fa-location-dot text-amber-500 text-2xl mb-3"></i>
+                        <h3 class="u-font-title text-base font-bold text-white mb-1">Центр Города</h3>
+                        <p class="text-xs text-neutral-400 leading-relaxed">Удобная парковка, комфортная зона отдыха и отличный кофе.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         MAIN / CATALOG SECTION (Блок: catalog)
+         ========================================== -->
+    <main id="catalog" class="catalog py-20 bg-neutral-900 border-t border-b border-amber-500/10">
+        <div class="catalog__container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="catalog__header text-center mb-12">
+                <span class="text-amber-500 text-xs font-bold uppercase tracking-[0.3em]">Каталог Стрижек</span>
+                <h2 class="u-font-title text-3xl sm:text-4xl font-bold text-white mt-2">Прически & Цены</h2>
+                <div class="w-16 h-0.5 bg-amber-500 mx-auto mt-4"></div>
+                <p class="text-neutral-400 text-xs sm:text-sm mt-3 max-w-xl mx-auto">20 стильных вариантов для вашего образа. Листайте карусель и выбирайте услугу.</p>
+            </div>
+
+            <div class="catalog__slider-wrapper relative group">
+                <button type="button" onclick="SliderModule.scroll('left')" class="catalog__arrow catalog__arrow--prev absolute -left-2 sm:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full glass-panel border border-amber-500/40 text-amber-400 flex items-center justify-center hover:bg-amber-500 hover:text-black transition-all shadow-xl">
+                    <i class="fa-solid fa-chevron-left text-sm pointer-events-none"></i>
+                </button>
+
+                <button type="button" onclick="SliderModule.scroll('right')" class="catalog__arrow catalog__arrow--next absolute -right-2 sm:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full glass-panel border border-amber-500/40 text-amber-400 flex items-center justify-center hover:bg-amber-500 hover:text-black transition-all shadow-xl">
+                    <i class="fa-solid fa-chevron-right text-sm pointer-events-none"></i>
+                </button>
+
+                <div id="hairstyleSlider" class="catalog__slider flex gap-6 overflow-x-auto hide-scrollbar scroll-smooth py-4 px-2"></div>
+            </div>
+
+            <div class="text-center mt-6">
+                <span class="text-[11px] text-neutral-500 tracking-wider uppercase"><i class="fa-solid fa-arrows-left-right mr-1"></i> Прокрутка свайпом или стрелками</span>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ==========================================
+         REVIEWS SECTION (Блок: reviews)
+         ========================================== -->
+    <section id="reviews" class="reviews py-20 bg-neutral-950">
+        <div class="reviews__container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reviews__header text-center mb-12">
+                <span class="text-amber-500 text-xs font-bold uppercase tracking-[0.3em]">Отзывы Гостей</span>
+                <h2 class="u-font-title text-3xl sm:text-4xl font-bold text-white mt-2">Что Говорят Клиенты</h2>
+                <div class="w-16 h-0.5 bg-amber-500 mx-auto mt-4"></div>
+            </div>
+
+            <div class="reviews__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-500 text-xs mb-3 flex gap-1"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed mb-6">«Хожу в Blade & Beard уже полгода. Всегда безупречный Fade и борода. Атмосфера настоящего мужского клуба, сервис выше всяких похвал!»</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xs flex items-center justify-center border border-amber-500/30">ДС</div>
+                        <div><h4 class="text-xs font-bold text-white">Данияр Смаилов</h4><span class="text-[10px] text-neutral-500">Постоянный клиент</span></div>
+                    </div>
+                </div>
+
+                <div class="card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-500 text-xs mb-3 flex gap-1"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed mb-6">«Моделирование бороды с горячим полотенцем — это лучший релакс после рабочей недели. Однозначно рекомендую барбера!»</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xs flex items-center justify-center border border-amber-500/30">АК</div>
+                        <div><h4 class="text-xs font-bold text-white">Арман Касымов</h4><span class="text-[10px] text-neutral-500">Предприниматель</span></div>
+                    </div>
+                </div>
+
+                <div class="card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-500 text-xs mb-3 flex gap-1"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed mb-6">«Приводил сына на детскую стрижку. Мастер сделал крутой Кроп быстро и без лишних капризов. Сын в восторге!»</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xs flex items-center justify-center border border-amber-500/30">ТА</div>
+                        <div><h4 class="text-xs font-bold text-white">Тимур Асанов</h4><span class="text-[10px] text-neutral-500">Архитектор</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FOOTER (Блок: footer)
+         ========================================== -->
+    <footer id="contacts" class="footer bg-black border-t border-amber-500/20 pt-12 pb-8 text-neutral-400 text-xs">
+        <div class="footer__container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full border border-amber-500 bg-neutral-900 flex items-center justify-center"><i class="fa-solid fa-scissors text-amber-500 text-xs"></i></div>
+                        <span class="u-font-title text-sm font-bold text-white tracking-widest">BLADE & BEARD</span>
+                    </div>
+                    <p class="text-neutral-400 text-xs leading-relaxed">Барбершоп премиум-класса. Территория безупречного стиля и мужского характера.</p>
+                </div>
+                <div>
+                    <h4 class="u-font-title text-white font-semibold mb-3 text-xs uppercase tracking-widest text-amber-400">График Работы</h4>
+                    <ul class="space-y-1.5 text-xs">
+                        <li class="flex justify-between"><span>Пн - Пт:</span> <span class="text-neutral-200">10:00 - 21:00</span></li>
+                        <li class="flex justify-between"><span>Сб - Вс:</span> <span class="text-neutral-200">10:00 - 22:00</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="u-font-title text-white font-semibold mb-3 text-xs uppercase tracking-widest text-amber-400">Контакты</h4>
+                    <ul class="space-y-1.5 text-xs">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-amber-500"></i> +7 (777) 123-45-67</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-amber-500"></i> пр. Достык, 105</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="u-font-title text-white font-semibold mb-3 text-xs uppercase tracking-widest text-amber-400">Соцсети</h4>
+                    <div class="flex gap-2">
+                        <a href="#" class="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-neutral-300 hover:text-amber-400 hover:border-amber-500 transition-colors"><i class="fa-brands fa-instagram text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-neutral-300 hover:text-amber-400 hover:border-amber-500 transition-colors"><i class="fa-brands fa-telegram text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-neutral-300 hover:text-amber-400 hover:border-amber-500 transition-colors"><i class="fa-brands fa-whatsapp text-xs"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] text-neutral-500">
+                <p>&copy; 2026 Blade & Beard Barber Studio. Все права защищены.</p>
+                <button type="button" onclick="PrivacyModule.openModal()" class="hover:text-amber-400 underline transition-colors cursor-pointer">Политика конфиденциальности</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         BOOKING MODAL (Блок: booking-modal)
+         ========================================== -->
+    <div id="bookingModal" class="booking-modal fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4">
+        <div class="booking-modal__content glass-panel w-full max-w-md rounded-2xl p-6 sm:p-8 relative border border-amber-500/30 shadow-2xl">
+            <button type="button" onclick="BookingModule.closeModal()" class="booking-modal__close absolute top-4 right-4 text-neutral-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="u-font-title text-xl font-bold text-white mb-1">Онлайн Запись</h3>
+            <p class="text-xs text-neutral-400 mb-6">Выберите услугу, удобную дату и время визита.</p>
+
+            <form id="bookingForm" onsubmit="BookingModule.handleSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-amber-400 font-bold mb-1">Услуга</label>
+                    <select id="modalServiceSelect" class="w-full bg-neutral-900 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition-colors">
+                        <option value="Мужская стрижка">Мужская стрижка — 7,000 ₸</option>
+                        <option value="Стрижка бороды">Стрижка бороды — 4,000 ₸</option>
+                        <option value="Стрижка + Борода">Стрижка + Борода — 10,000 ₸</option>
+                        <option value="Детская стрижка">Детская стрижка — 5,000 ₸</option>
+                        <option value="Королевское бритье">Королевское бритье — 8,000 ₸</option>
+                        <option value="VIP Комплекс">VIP Комплекс — 15,000 ₸</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-wider text-amber-400 font-bold mb-1">Дата</label>
+                        <input type="date" id="modalBookingDate" required class="w-full bg-neutral-900 border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-wider text-amber-400 font-bold mb-1">Время</label>
+                        <input type="time" id="modalBookingTime" required class="w-full bg-neutral-900 border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition-colors">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-amber-400 font-bold mb-1">Ваше Имя</label>
+                    <input type="text" required placeholder="Александр" class="w-full bg-neutral-900 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition-colors">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-amber-400 font-bold mb-1">Номер Телефона</label>
+                    <input type="tel" required placeholder="+7 (700) 000-00-00" class="w-full bg-neutral-900 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition-colors">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-extrabold uppercase text-xs tracking-wider py-3.5 rounded-lg mt-2 transition-all cursor-pointer">Подтвердить запись</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PRIVACY POLICY MODAL (Блок: privacy-modal)
+         ========================================== -->
+    <div id="privacyModal" class="privacy-modal fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4">
+        <div class="privacy-modal__content glass-panel w-full max-w-2xl max-h-[80vh] rounded-2xl p-6 sm:p-8 relative border border-amber-500/30 overflow-y-auto">
+            <button type="button" onclick="PrivacyModule.closeModal()" class="privacy-modal__close absolute top-4 right-4 text-neutral-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="u-font-title text-xl font-bold text-white mb-4">Политика Конфиденциальности</h3>
+            <div class="text-xs text-neutral-300 space-y-4 leading-relaxed">
+                <p><strong>1. Общие положения</strong><br>Настоящая политика определяет порядок обработки и защиты персональных данных клиентов барбершопа Blade & Beard.</p>
+                <p><strong>2. Сбор данных</strong><br>Мы собираем только имя, номер телефона и параметры записи для подтверждения и бронирования вашего визита.</p>
+                <p><strong>3. Защита информации</strong><br>Персональные данные используются исключительно для внутреннего учета и не передаются третьим лицам.</p>
+            </div>
+            <div class="mt-6 text-right"><button type="button" onclick="PrivacyModule.closeModal()" class="px-6 py-2 bg-amber-500 text-black text-xs font-bold uppercase rounded-md hover:bg-amber-400 transition-colors">Понятно</button></div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         TOAST NOTIFICATION (Блок: toast)
+         ========================================== -->
+    <div id="toastNotification" class="toast fixed bottom-6 right-6 z-50 hidden bg-amber-500 text-black px-5 py-3 rounded-xl shadow-2xl font-semibold text-xs items-center gap-3">
+        <i class="fa-solid fa-circle-check text-base"></i>
+        <span id="toastMessage">Вы успешно записались! До встречи.</span>
+    </div>
+
+    <!-- Подключение внешнего файла скрипта -->
+    <script src="script.js"></script>
+</body>
+</html>ы
